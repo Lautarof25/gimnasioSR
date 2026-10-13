@@ -658,7 +658,8 @@
             aspect-ratio: 4 / 3;
         }
 
-        .gallery-item img {
+        .gallery-item img,
+        .gallery-item video {
             display: block;
             width: 100%;
             height: 100%;
@@ -666,7 +667,8 @@
             transition: transform 300ms ease;
         }
 
-        .gallery-item:hover img {
+        .gallery-item:hover img,
+        .gallery-item:hover video {
             transform: scale(1.04);
         }
 
@@ -1916,20 +1918,30 @@
 
                 <div class="gallery-grid">
                     <figure class="gallery-item">
-                        <img src="maquinas/afuera.jpg" alt="Frente del gimnasio Gimnasio SR Sport Gym" loading="lazy"
+                        <img src="maquinas/gimnasio fuera.jpg" alt="Frente del gimnasio Gimnasio SR Sport Gym" loading="lazy"
                             decoding="async">
                         <figcaption>Así nos encontrás</figcaption>
                     </figure>
                     <figure class="gallery-item">
-                        <img src="maquinas/maquinas1.jpg"
-                            alt="Vista interior del gimnasio con máquinas y zona de entrenamiento" loading="lazy"
-                            decoding="async">
+                        <video autoplay muted loop playsinline preload="metadata" aria-label="Video de la sala de máquinas del gimnasio">
+                            <source src="maquinas/maquinas1.mp4" type="video/mp4">
+                        </video>
                         <figcaption>Espacio para moverte</figcaption>
                     </figure>
                     <figure class="gallery-item">
-                        <img src="maquinas/maquinas2.jpg"
-                            alt="Equipamiento y máquinas de entrenamiento en el interior del gimnasio" loading="lazy"
+                        <img src="maquinas/maquinas2.jpg" alt="Maquinas del gimnasio" loading="lazy"
                             decoding="async">
+                        <figcaption>Equipo de calidad</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <img src="maquinas/maquinas1.jpg" alt="Maquinas del gimnasio" loading="lazy"
+                            decoding="async">
+                        <figcaption>Espacio y entrenamiento</figcaption>
+                    </figure>
+                    <figure class="gallery-item">
+                        <video autoplay muted loop playsinline preload="metadata" aria-label="Video del equipamiento del gimnasio">
+                            <source src="maquinas/maquinas2.mp4" type="video/mp4">
+                        </video>
                         <figcaption>Equipamiento para entrenar</figcaption>
                     </figure>
                 </div>
