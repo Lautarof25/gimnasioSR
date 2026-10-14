@@ -2105,7 +2105,7 @@
                     <p>Opciones para entrenar a tu manera, desde pase libre hasta una o más actividades por semana.</p>
                 </header>
 
-                <div class="plans-grid">
+                <div class="plans-grid" id="plans-grid">
                     <article class="plan-card plan-card-featured">
                         <p class="plan-tag">Acceso completo</p>
                         <h3>Pase libre</h3>
@@ -2431,6 +2431,173 @@
             throttleDelay: 99,
             delay: 200,
             disable: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        });
+
+        const plansGrid = document.querySelector("#plans-grid");
+        const plansSheetUrl = "https://docs.google.com/spreadsheets/d/1goEAr7KeQfjK2hDu0cL2Yf0XU9W52jOy0v1LlhHUQaQ/export?format=csv";
+
+        function parseCsv(csv) {
+            const rows = [];
+            let row = [];
+            let cell = "";
+            let insideQuotes = false;
+
+            for (let index = 0; index < csv.length; index += 1) {
+                const character = csv[index];
+
+                if (character === '"') {
+                    if (insideQuotes && csv[index + 1] === '"') {
+                        cell += '"';
+                        index += 1;
+                    } else {
+                        insideQuotes = !insideQuotes;
+                    }
+                } else if (character === "," && !insideQuotes) {
+                    row.push(cell);
+                    cell = "";
+                } else if ((character === "\n" || character === "\r") && !insideQuotes) {
+                    if (character === "\r" && csv[index + 1] === "\n") {
+                        index += 1;
+                    }
+                    row.push(cell);
+                    rows.push(row);
+                    row = [];
+                    cell = "";
+                } else {
+                    cell += character;
+                }
+            }
+
+            if (cell || row.length) {
+                row.push(cell);
+                rows.push(row);
+            }
+
+            return rows;
+        }
+
+        function readPlansFromCsv(csv) {
+            const plans = [];
+            let currentPlan;
+
+            parseCsv(csv).forEach((row) => {
+                const field = row[0]?.trim();
+
+                if (field?.startsWith("TARJETA ")) {
+                    currentPlan = {
+                        type: field.startsWith("TARJETA DESTACADA")
+                            ? "featured"
+                            : field.startsWith("TARJETA AMPLIA")
+                                ? "combo"
+                                : "standard",
+                        activities: [],
+                        benefits: [],
+                    };
+                    plans.push(currentPlan);
+                    return;
+                }
+
+                if (!currentPlan || !field) {
+                    return;
+                }
+
+                const value = row[1]?.trim();
+                if (!value) {
+                    return;
+                }
+
+                if (field === "Etiqueta") {
+                    currentPlan.tag = value;
+                } else if (field === "Título") {
+                    currentPlan.title = value;
+                } else if (field === "Precio") {
+                    currentPlan.price = value;
+                } else if (field === "Descripción") {
+                    currentPlan.description = value;
+                } else if (/^Actividad \d+$/.test(field)) {
+                    currentPlan.activities.push(value);
+                } else if (/^Beneficio \d+$/.test(field)) {
+                    currentPlan.benefits.push(value);
+                }
+            });
+
+            if (!plans.length || plans.some((plan) => !plan.title || !plan.price)) {
+                throw new Error("La planilla debe incluir al menos un plan con título y precio.");
+            }
+
+            return plans;
+        }
+
+        function createPlanCard(plan) {
+            const card = document.createElement("article");
+            card.classList.add("plan-card");
+            if (plan.type === "featured") {
+                card.classList.add("plan-card-featured");
+            } else if (plan.type === "combo") {
+                card.classList.add("plan-card-combo");
+            }
+
+            const tag = document.createElement("p");
+            tag.classList.add("plan-tag");
+            tag.textContent = plan.tag || "";
+            card.append(tag);
+
+            const title = document.createElement("h3");
+            title.textContent = plan.title;
+            card.append(title);
+
+            const price = document.createElement("p");
+            price.classList.add("plan-price");
+            const priceParts = plan.price.match(/^(.*?)\s*\/\s*(.+)$/);
+            if (priceParts) {
+                price.append(document.createTextNode(`${priceParts[1]} `));
+                const period = document.createElement("span");
+                period.textContent = `/ ${priceParts[2]}`;
+                price.append(period);
+            } else {
+                price.textContent = plan.price;
+            }
+            card.append(price);
+
+            if (plan.description) {
+                const description = document.createElement("p");
+                description.classList.add("plan-detail");
+                description.textContent = plan.description;
+                card.append(description);
+            }
+
+            [["activities", "plan-activities", "Actividades incluidas"], ["benefits", "plan-includes", "Beneficios incluidos"]]
+                .forEach(([key, className, label]) => {
+                    if (!plan[key].length) {
+                        return;
+                    }
+
+                    const list = document.createElement("ul");
+                    list.classList.add(className);
+                    list.setAttribute("aria-label", label);
+                    plan[key].forEach((item) => {
+                        const listItem = document.createElement("li");
+                        listItem.textContent = item;
+                        list.append(listItem);
+                    });
+                    card.append(list);
+                });
+
+            return card;
+        }
+
+        async function loadPlansFromSheet() {
+            const response = await fetch(plansSheetUrl, { cache: "no-store" });
+            if (!response.ok) {
+                throw new Error(`La planilla respondió con estado ${response.status}.`);
+            }
+
+            const plans = readPlansFromCsv(await response.text());
+            plansGrid.replaceChildren(...plans.map(createPlanCard));
+        }
+
+        loadPlansFromSheet().catch((error) => {
+            console.error("No se pudieron actualizar los planes desde Google Sheets. Se mantienen los planes de respaldo.", error);
         });
     </script>
 </body>
