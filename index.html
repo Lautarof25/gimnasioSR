@@ -1003,6 +1003,16 @@
             background: linear-gradient(145deg, rgb(35 35 35 / 92%), rgb(15 15 15 / 96%));
         }
 
+        .plan-card .plan-cta {
+            width: 100%;
+            min-height: 48px;
+            justify-content: space-between;
+            margin-top: auto;
+            padding: 0 14px;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+        }
+
         .plan-card-featured {
             border-color: rgb(237 28 43 / 70%);
             background:
@@ -1025,22 +1035,6 @@
             font-weight: 400;
             line-height: 1;
             text-transform: uppercase;
-        }
-
-        .plan-price {
-            margin: 12px 0 14px;
-            color: var(--paper);
-            font-size: 1.9rem;
-            font-weight: 900;
-            letter-spacing: -0.04em;
-            line-height: 1;
-        }
-
-        .plan-price span {
-            color: var(--muted);
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
         }
 
         .plan-detail {
@@ -1126,18 +1120,6 @@
             color: var(--muted);
             font-size: 11px;
             line-height: 1.5;
-        }
-
-        .plans-contact {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 15px;
-            margin-top: 22px;
-        }
-
-        .plans-contact .cta {
-            min-height: 48px;
         }
 
         .rules {
@@ -1556,12 +1538,6 @@
                 padding: 20px 22px;
             }
 
-            .plans-contact {
-                flex-direction: row;
-                align-items: center;
-                gap: 22px;
-            }
-
             .progress-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 18px;
@@ -1732,13 +1708,8 @@
 
             .plan-card-combo .plan-tag,
             .plan-card-combo h3,
-            .plan-card-combo .plan-price,
             .plan-card-combo .plan-detail {
                 grid-column: 1;
-            }
-
-            .plan-card-combo .plan-price {
-                margin-bottom: 0;
             }
 
             .plan-card-combo .plan-includes {
@@ -2109,33 +2080,59 @@
                     <article class="plan-card plan-card-featured">
                         <p class="plan-tag">Acceso completo</p>
                         <h3>Pase libre</h3>
-                        <p class="plan-price">$35.000 <span>/ mes</span></p>
                         <p class="plan-detail">Entrená en todas las actividades incluidas.</p>
                         <ul class="plan-activities" aria-label="Actividades incluidas">
                             <li>CrossFit</li>
                             <li>Musculación</li>
                             <li>Funcional</li>
                         </ul>
+                        <a class="cta cta-whatsapp plan-cta"
+                            href="https://api.whatsapp.com/send/?phone=5491128847355&amp;text=Hola%2C%20quiero%20consultar%20el%20precio%20del%20plan%20Pase%20libre.&amp;type=phone_number&amp;app_absent=0"
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Consulta precio del plan Pase libre por WhatsApp">
+                            Consulta precio
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </article>
 
                     <article class="plan-card">
                         <p class="plan-tag">A tu medida</p>
                         <h3>3 veces por semana</h3>
-                        <p class="plan-price">$33.000 <span>/ mes</span></p>
                         <p class="plan-detail">Elegí una actividad para entrenar tres veces por semana.</p>
+                        <a class="cta cta-whatsapp plan-cta"
+                            href="https://api.whatsapp.com/send/?phone=5491128847355&amp;text=Hola%2C%20quiero%20consultar%20el%20precio%20del%20plan%203%20veces%20por%20semana.&amp;type=phone_number&amp;app_absent=0"
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Consulta precio del plan 3 veces por semana por WhatsApp">
+                            Consulta precio
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </article>
 
                     <article class="plan-card">
                         <p class="plan-tag">A tu medida</p>
                         <h3>2 veces por semana</h3>
-                        <p class="plan-price">$30.000 <span>/ mes</span></p>
                         <p class="plan-detail">Elegí una actividad para entrenar dos veces por semana.</p>
+                        <a class="cta cta-whatsapp plan-cta"
+                            href="https://api.whatsapp.com/send/?phone=5491128847355&amp;text=Hola%2C%20quiero%20consultar%20el%20precio%20del%20plan%202%20veces%20por%20semana.&amp;type=phone_number&amp;app_absent=0"
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Consulta precio del plan 2 veces por semana por WhatsApp">
+                            Consulta precio
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </article>
 
                     <article class="plan-card plan-card-combo">
                         <p class="plan-tag">Combo pase libre</p>
-                        <h3>Nutrición + Gimnasio</h3>
-                        <p class="plan-price">$45.000</p>
+                        <h3>Nutrición + Entrenamiento</h3>
                         <p class="plan-detail">Pase libre para todas las actividades y plan de nutrición personalizado.
                         </p>
                         <ul class="plan-includes">
@@ -2143,17 +2140,16 @@
                             <li>Chequeo semanal</li>
                             <li>Plan individual personalizado</li>
                         </ul>
-                    </article>
-
-                    <article class="plan-card plan-card-combo">
-                        <p class="plan-tag">Combo</p>
-                        <h3>Nutrición deportiva</h3>
-                        <p class="plan-price">$00.000</p>
-                        <p class="plan-detail">Plan de nutrición deporitvo personalizado.
-                        </p>
-                        <ul class="plan-includes">
-                            <li>Plan individual personalizado</li>
-                        </ul>
+                        <a class="cta cta-whatsapp plan-cta"
+                            href="https://api.whatsapp.com/send/?phone=5491128847355&amp;text=Hola%2C%20quiero%20consultar%20el%20precio%20del%20plan%20Nutrici%C3%B3n%20%2B%20Entrenamiento.&amp;type=phone_number&amp;app_absent=0"
+                            target="_blank" rel="noopener noreferrer"
+                            aria-label="Consulta precio del plan Nutrición + Entrenamiento por WhatsApp">
+                            Consulta precio
+                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
                     </article>
                 </div>
 
@@ -2168,22 +2164,9 @@
                     </div>
                     <div>
                         <h3>Importante</h3>
-                        <p class="plans-note">El abono se realiza al iniciar la clase. Los valores son los publicados en
-                            los flyers; consultá por WhatsApp para confirmar vigencia.</p>
+                        <p class="plans-note">El abono se realiza al iniciar la clase. Consultá el precio actualizado
+                            desde el botón de cada plan.</p>
                     </div>
-                </div>
-
-                <div class="plans-contact">
-                    <a class="cta cta-whatsapp"
-                        href="https://api.whatsapp.com/send/?phone=5491128847355&amp;text=Hola%2C%20quiero%20consultar%20por%20los%20planes%20del%20gimnasio&amp;type=phone_number&amp;app_absent=0"
-                        target="_blank" rel="noopener noreferrer">
-                        Consultar por WhatsApp
-                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M5 12h13m-5-5 5 5-5 5" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                    </a>
-                    <p class="plans-note">Precios sujetos a actualización. Consultá disponibilidad y condiciones.</p>
                 </div>
             </div>
         </section>
@@ -2433,172 +2416,6 @@
             disable: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
         });
 
-        const plansGrid = document.querySelector("#plans-grid");
-        const plansSheetUrl = "https://docs.google.com/spreadsheets/d/1goEAr7KeQfjK2hDu0cL2Yf0XU9W52jOy0v1LlhHUQaQ/export?format=csv";
-
-        function parseCsv(csv) {
-            const rows = [];
-            let row = [];
-            let cell = "";
-            let insideQuotes = false;
-
-            for (let index = 0; index < csv.length; index += 1) {
-                const character = csv[index];
-
-                if (character === '"') {
-                    if (insideQuotes && csv[index + 1] === '"') {
-                        cell += '"';
-                        index += 1;
-                    } else {
-                        insideQuotes = !insideQuotes;
-                    }
-                } else if (character === "," && !insideQuotes) {
-                    row.push(cell);
-                    cell = "";
-                } else if ((character === "\n" || character === "\r") && !insideQuotes) {
-                    if (character === "\r" && csv[index + 1] === "\n") {
-                        index += 1;
-                    }
-                    row.push(cell);
-                    rows.push(row);
-                    row = [];
-                    cell = "";
-                } else {
-                    cell += character;
-                }
-            }
-
-            if (cell || row.length) {
-                row.push(cell);
-                rows.push(row);
-            }
-
-            return rows;
-        }
-
-        function readPlansFromCsv(csv) {
-            const plans = [];
-            let currentPlan;
-
-            parseCsv(csv).forEach((row) => {
-                const field = row[0]?.trim();
-
-                if (field?.startsWith("TARJETA ")) {
-                    currentPlan = {
-                        type: field.startsWith("TARJETA DESTACADA")
-                            ? "featured"
-                            : field.startsWith("TARJETA AMPLIA")
-                                ? "combo"
-                                : "standard",
-                        activities: [],
-                        benefits: [],
-                    };
-                    plans.push(currentPlan);
-                    return;
-                }
-
-                if (!currentPlan || !field) {
-                    return;
-                }
-
-                const value = row[1]?.trim();
-                if (!value) {
-                    return;
-                }
-
-                if (field === "Etiqueta") {
-                    currentPlan.tag = value;
-                } else if (field === "Título") {
-                    currentPlan.title = value;
-                } else if (field === "Precio") {
-                    currentPlan.price = value;
-                } else if (field === "Descripción") {
-                    currentPlan.description = value;
-                } else if (/^Actividad \d+$/.test(field)) {
-                    currentPlan.activities.push(value);
-                } else if (/^Beneficio \d+$/.test(field)) {
-                    currentPlan.benefits.push(value);
-                }
-            });
-
-            if (!plans.length || plans.some((plan) => !plan.title || !plan.price)) {
-                throw new Error("La planilla debe incluir al menos un plan con título y precio.");
-            }
-
-            return plans;
-        }
-
-        function createPlanCard(plan) {
-            const card = document.createElement("article");
-            card.classList.add("plan-card");
-            if (plan.type === "featured") {
-                card.classList.add("plan-card-featured");
-            } else if (plan.type === "combo") {
-                card.classList.add("plan-card-combo");
-            }
-
-            const tag = document.createElement("p");
-            tag.classList.add("plan-tag");
-            tag.textContent = plan.tag || "";
-            card.append(tag);
-
-            const title = document.createElement("h3");
-            title.textContent = plan.title;
-            card.append(title);
-
-            const price = document.createElement("p");
-            price.classList.add("plan-price");
-            const priceParts = plan.price.match(/^(.*?)\s*\/\s*(.+)$/);
-            if (priceParts) {
-                price.append(document.createTextNode(`${priceParts[1]} `));
-                const period = document.createElement("span");
-                period.textContent = `/ ${priceParts[2]}`;
-                price.append(period);
-            } else {
-                price.textContent = plan.price;
-            }
-            card.append(price);
-
-            if (plan.description) {
-                const description = document.createElement("p");
-                description.classList.add("plan-detail");
-                description.textContent = plan.description;
-                card.append(description);
-            }
-
-            [["activities", "plan-activities", "Actividades incluidas"], ["benefits", "plan-includes", "Beneficios incluidos"]]
-                .forEach(([key, className, label]) => {
-                    if (!plan[key].length) {
-                        return;
-                    }
-
-                    const list = document.createElement("ul");
-                    list.classList.add(className);
-                    list.setAttribute("aria-label", label);
-                    plan[key].forEach((item) => {
-                        const listItem = document.createElement("li");
-                        listItem.textContent = item;
-                        list.append(listItem);
-                    });
-                    card.append(list);
-                });
-
-            return card;
-        }
-
-        async function loadPlansFromSheet() {
-            const response = await fetch(plansSheetUrl, { cache: "no-store" });
-            if (!response.ok) {
-                throw new Error(`La planilla respondió con estado ${response.status}.`);
-            }
-
-            const plans = readPlansFromCsv(await response.text());
-            plansGrid.replaceChildren(...plans.map(createPlanCard));
-        }
-
-        loadPlansFromSheet().catch((error) => {
-            console.error("No se pudieron actualizar los planes desde Google Sheets. Se mantienen los planes de respaldo.", error);
-        });
     </script>
 </body>
 
