@@ -1549,6 +1549,10 @@
         }
 
         @media (max-width: 699px) {
+            .home-video {
+                display: none;
+            }
+
             .topbar {
                 display: grid;
                 grid-template-columns: 1fr auto;
@@ -1731,8 +1735,12 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        html:not(.aos-ready) [data-aos] {
+            opacity: 1 !important;
+            transform: none !important;
+        }
     </style>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 
 <body>
@@ -1741,7 +1749,7 @@
             <video class="home-video" autoplay muted loop playsinline preload="metadata"
                 poster="images_gim/SaveClip.App_821553076_17900216502667072_8545425022111592182_n.jpg"
                 aria-hidden="true">
-                <source src="videos/intro3.mp4" type="video/mp4">
+                <source data-src="videos/intro3.mp4" type="video/mp4">
             </video>
             <header class="topbar">
                 <a class="brand" href="#inicio" aria-label="Gimnasio SR Sport Gym, inicio">
@@ -1921,19 +1929,19 @@
                         <figcaption>Así nos encontrás</figcaption>
                     </figure>
                     <figure class="gallery-item gallery-item-video">
-                        <video autoplay muted loop playsinline preload="metadata" aria-label="Video de la sala de máquinas del gimnasio">
+                        <video controls playsinline preload="none" data-poster="maquinas/maquinas1.jpg" aria-label="Video de la sala de máquinas del gimnasio">
                             <source src="maquinas/maquinas1.mp4" type="video/mp4">
                         </video>
                         <figcaption>Espacio para moverte</figcaption>
                     </figure>
                     <figure class="gallery-item gallery-item-video">
-                        <video autoplay muted loop playsinline preload="metadata" aria-label="Video del equipamiento del gimnasio">
+                        <video controls playsinline preload="none" data-poster="maquinas/maquinas2.jpg" aria-label="Video del equipamiento del gimnasio">
                             <source src="maquinas/maquinas2.mp4" type="video/mp4">
                         </video>
                         <figcaption>Equipamiento para entrenar</figcaption>
                     </figure>
                     <figure class="gallery-item gallery-item-video">
-                        <video autoplay muted loop playsinline preload="metadata" aria-label="Video del equipamiento del gimnasio">
+                        <video controls playsinline preload="none" data-poster="videos/posters/crosssfit.jpg" aria-label="Video de entrenamiento de CrossFit">
                             <source src="videos/crossfit.mp4" type="video/mp4">
                         </video>
                         <figcaption>Crossfit con intensidad</figcaption>
@@ -2208,21 +2216,21 @@
 
                 <div class="training-video-grid">
                     <figure class="training-video">
-                        <video controls playsinline preload="none" poster="videos/posters/funcional.jpg">
+                        <video controls playsinline preload="none" data-poster="videos/posters/funcional.jpg">
                             <source src="videos/funcional.mp4" type="video/mp4">
                             Tu navegador no puede reproducir este video.
                         </video>
                         <figcaption>Funcional</figcaption>
                     </figure>
                     <figure class="training-video">
-                        <video controls playsinline preload="none" poster="videos/posters/pesas.jpg">
+                        <video controls playsinline preload="none" data-poster="videos/posters/pesas.jpg">
                             <source src="videos/pesas.mp4" type="video/mp4">
                             Tu navegador no puede reproducir este video.
                         </video>
                         <figcaption>Musculación</figcaption>
                     </figure>
                     <figure class="training-video">
-                        <video controls playsinline preload="none" poster="videos/posters/kickboxing.jpg">
+                        <video controls playsinline preload="none" data-poster="videos/posters/kickboxing.jpg">
                             <source src="videos/kickboxing.mp4" type="video/mp4">
                             Tu navegador no puede reproducir este video.
                         </video>
@@ -2230,7 +2238,7 @@
                     </figure>
 
                     <figure class="training-video">
-                        <video controls playsinline preload="none" poster="videos/posters/crosssfit.jpg">
+                        <video controls playsinline preload="none" data-poster="videos/posters/crosssfit.jpg">
                             <source src="videos/crossfit.mp4" type="video/mp4">
                             Tu navegador no puede reproducir este video.
                         </video>
@@ -2357,7 +2365,6 @@
         </svg>
         <span>Escribinos</span>
     </a>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         const topbar = document.querySelector(".topbar");
         const menuToggle = document.querySelector(".menu-toggle");
@@ -2366,6 +2373,32 @@
         const bmiResult = document.querySelector("#bmi-result");
         const bmiValue = document.querySelector("#bmi-value");
         const bmiCategory = document.querySelector("#bmi-category");
+        const homeVideo = document.querySelector(".home-video");
+
+        if (window.matchMedia("(min-width: 700px)").matches
+            && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            const homeVideoSource = homeVideo.querySelector("source");
+            homeVideoSource.src = homeVideoSource.dataset.src;
+            homeVideo.load();
+        }
+
+        const deferredVideos = document.querySelectorAll("video[data-poster]");
+        if ("IntersectionObserver" in window) {
+            const videoPosterObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.poster = entry.target.dataset.poster;
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: "200px 0px" });
+
+            deferredVideos.forEach((video) => videoPosterObserver.observe(video));
+        } else {
+            deferredVideos.forEach((video) => {
+                video.poster = video.dataset.poster;
+            });
+        }
 
         menuToggle.addEventListener("click", () => {
             const isOpen = topbar.classList.toggle("menu-open");
@@ -2409,12 +2442,42 @@
             bmiResult.hidden = false;
         });
 
-        AOS.init({
-            debounceDelay: 50,
-            throttleDelay: 99,
-            delay: 200,
-            disable: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-        });
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            const loadAnimations = () => {
+                const stylesheet = document.createElement("link");
+                stylesheet.rel = "stylesheet";
+                stylesheet.href = "https://unpkg.com/aos@2.3.1/dist/aos.css";
+                stylesheet.onload = () => {
+                    const script = document.createElement("script");
+                    script.src = "https://unpkg.com/aos@2.3.1/dist/aos.js";
+                    script.onload = () => {
+                        window.AOS.init({
+                            debounceDelay: 50,
+                            throttleDelay: 99,
+                            delay: 200,
+                        });
+                        document.documentElement.classList.add("aos-ready");
+                    };
+                    script.onerror = () => {
+                        stylesheet.remove();
+                        console.error("No se pudo cargar AOS; las animaciones quedan desactivadas.");
+                    };
+                    document.body.append(script);
+                };
+                stylesheet.onerror = () => {
+                    console.error("No se pudo cargar el CSS de AOS; las animaciones quedan desactivadas.");
+                };
+                document.head.append(stylesheet);
+            };
+
+            window.addEventListener("load", () => {
+                if ("requestIdleCallback" in window) {
+                    window.requestIdleCallback(loadAnimations, { timeout: 2000 });
+                } else {
+                    window.setTimeout(loadAnimations, 1200);
+                }
+            }, { once: true });
+        }
 
     </script>
 </body>
